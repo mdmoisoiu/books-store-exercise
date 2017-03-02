@@ -1,0 +1,63 @@
+{
+  "name": "candidate-exercise",
+  "description": "Let's build an online bookshop",
+  "homepage": "",
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Matei Moisoiu",
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vendigo-group/candidate-exercise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vendigo-group/candidate-exercise/issues"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "keywords": [
+    "test"
+  ],
+  "scripts": {
+    "lint": "snazzy",
+    "start": "nodemon .",
+    "test": "lab -c"
+  },
+  "dependencies": {
+    "boom": "^4.2.0",
+    "hapi": "^16.0.1",
+    "hapi-handlers": "^2.0.0",
+    "hapi-methods-injection": "^1.1.0",
+    "inert": "^4.0.3",
+    "joi": "^10.0.5",
+    "lodash-node": "^3.10.2",
+    "request": "^2.79.0",
+    "vision": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "code": "^4.0.0",
+    "grunt": "^1.0.1",
+    "grunt-angular-template": "^0.1.2",
+    "grunt-angular-templates": "^1.1.0",
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-karma": "^2.0.0",
+    "jasmine-core": "^2.5.2",
+    "joi": "^10.2.2",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "lab": "^12.1.0",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.6",
+    "nodemon": "^1.11.0",
+    "sinon": "^1.17.7",
+    "snazzy": "^6.0.0",
+    "standard": "^8.6.0"
+  }
+}

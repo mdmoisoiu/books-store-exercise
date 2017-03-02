@@ -1,0 +1,26 @@
+<div class="books-container" ng-init="vm.getBooks()">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="SEARCH" ng-model="vm.booksSearchTerm" ng-keypress="vm.onSearchBooksKeyPress($event)" />
+    <span class="input-group-btn">
+      <button class="btn btn-default search-button" ng-click="vm.searchBooks()" type="button"><span class="glyphicon glyphicon-search"></span></button>
+    </span>
+  </div>
+
+  <div class="books-title-container alert alert-success">
+    FEATURED
+  </div>
+
+  <div class="row" >
+    <div class="col-md-4" ng-repeat="book in vm.books">
+      <div class="thumbnail">
+        <img ng-src="{{::book.cover.medium}}">
+        <div class="caption">
+          <b class="book-title">{{::book.title}}</b>
+          <p>By <span class="book-author">{{::book.authors[0].name}}</span></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+          <p><span class="book-price">$10.11</span><a href="#" class="btn btn-primary pull-right black-background" role="button">Add to Cart</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div ng-controller="MainController">
+    <div class="books-header">
+      <img src="img/download.svg" />
+      <header>Book Store</header>
+      <div class="books-sub-tile">The biggest choice on web</div>
+    </div>
+    <div ui-view></div>
+
+    <loader ng-show="vm.showLoading"></loader>
+
+</div>
