@@ -9,10 +9,10 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vendigo-group/candidate-exercise.git"
+    "url": "git+https://github.com/mdmoisoiu/books-store-exercise.git"
   },
   "bugs": {
-    "url": "https://github.com/vendigo-group/candidate-exercise/issues"
+    "url": "https://github.com/mdmoisoiu/books-store-exercise/issues"
   },
   "engines": {
     "node": ">=4.0.0"
