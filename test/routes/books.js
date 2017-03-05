@@ -7,15 +7,15 @@ var context = require('hapi-methods-injection').methods;
 
 lab.experiment("/books route", function() {
 
-  lab.test("should rely on openLibraryClient.getAllBooks service result, and set a default value for itemsNo", function(done) {
+  lab.test("should rely on openLibraryClient.getBooks service result and set a default value for itemsNo", function(done) {
     let books = ['test 1', 'test 2'],
       options = {
       method: "GET",
       url: "/books"
     };
 
-    let getAllBooksStub = sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+    let getBooksStub = sinon
+      .stub(context.services.openLibraryClient, 'getBooks')
       .yields(null, books);
 
     server.inject(options, function(response) {
@@ -25,9 +25,9 @@ lab.experiment("/books route", function() {
       Code.expect(result).to.be.instanceof(Array);
       Code.expect(result).to.have.length(2);
 
-      Code.expect(getAllBooksStub.lastCall.args[0]).to.equal(6);
+      Code.expect(getBooksStub.lastCall.args[0]).to.equal(6);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooks.restore();
       done();
     });
   });
@@ -51,13 +51,13 @@ lab.experiment("/books route", function() {
       };
 
     sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+      .stub(context.services.openLibraryClient, 'getBooks')
       .throws("SomeError");
 
     server.inject(options, function(response) {
       Code.expect(response.statusCode).to.equal(500);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooks.restore();
       done();
     });
   });

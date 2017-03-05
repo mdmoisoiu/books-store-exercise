@@ -7,19 +7,16 @@ var context = require('hapi-methods-injection').methods;
 
 lab.experiment("/books/filter/olid/{olid}", function() {
 
-  lab.test("should rely on openLibraryClient.getAllBooks service and filter by olid, set a default itemsNo", function(done) {
+  lab.test("should rely on openLibraryClient.getBooksFilteredByOlid service and set a default itemsNo", function(done) {
     let books = [
-      {identifiers: {openlibrary: 'OL123M'}},
-      {identifiers: {openlibrary: 'OL234M'}},
-      {identifiers: {openlibrary: 'OL345M'}},
-      {identifiers: {openlibrary: 'OL456M'}}
+      {identifiers: {openlibrary: 'OL234M'}}
     ], options = {
       method: "GET",
       url: "/books/filter/olid/OL234M"
     };
 
-    let getAllBooksStub = sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+    let getBooksFilteredByOlidStub = sinon
+      .stub(context.services.openLibraryClient, 'getBooksFilteredByOlid')
       .yields(null, books);
 
     server.inject(options, function(response) {
@@ -29,9 +26,10 @@ lab.experiment("/books/filter/olid/{olid}", function() {
       Code.expect(result).to.be.instanceof(Array);
       Code.expect(result).to.have.length(1);
 
-      Code.expect(getAllBooksStub.lastCall.args[0]).to.equal(6);
+      Code.expect(getBooksFilteredByOlidStub.lastCall.args[0]).to.equal('OL234M');
+      Code.expect(getBooksFilteredByOlidStub.lastCall.args[1]).to.equal(6);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooksFilteredByOlid.restore();
       done();
     });
   });
@@ -55,13 +53,13 @@ lab.experiment("/books/filter/olid/{olid}", function() {
     };
 
     sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+      .stub(context.services.openLibraryClient, 'getBooksFilteredByOlid')
       .throws("SomeError");
 
     server.inject(options, function(response) {
       Code.expect(response.statusCode).to.equal(500);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooksFilteredByOlid.restore();
       done();
     });
   });

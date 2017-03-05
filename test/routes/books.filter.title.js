@@ -7,19 +7,17 @@ var context = require('hapi-methods-injection').methods;
 
 lab.experiment("/books/filter/title/{searchTerm}", function() {
 
-  lab.test("should rely on openLibraryClient.getAllBooks service and filter by search term, set a default itemsNo", function(done) {
+  lab.test("should rely on openLibraryClient.getAllBooks service result and set a default itemsNo", function(done) {
     let books = [
-      {title: 'test 1'},
       {title: 'something 2'},
-      {title: '3 something'},
-      {title: '4 aaa'}
+      {title: '3 something'}
     ], options = {
       method: "GET",
       url: "/books/filter/title/something"
     };
 
-    let getAllBooksStub = sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+    let getBooksFilteredByTitleSearchStub = sinon
+      .stub(context.services.openLibraryClient, 'getBooksFilteredByTitleSearch')
       .yields(null, books);
 
     server.inject(options, function(response) {
@@ -29,9 +27,10 @@ lab.experiment("/books/filter/title/{searchTerm}", function() {
       Code.expect(result).to.be.instanceof(Array);
       Code.expect(result).to.have.length(2);
 
-      Code.expect(getAllBooksStub.lastCall.args[0]).to.equal(6);
+      Code.expect(getBooksFilteredByTitleSearchStub.lastCall.args[0]).to.equal('something');
+      Code.expect(getBooksFilteredByTitleSearchStub.lastCall.args[1]).to.equal(6);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooksFilteredByTitleSearch.restore();
       done();
     });
   });
@@ -55,13 +54,13 @@ lab.experiment("/books/filter/title/{searchTerm}", function() {
     };
 
     sinon
-      .stub(context.services.openLibraryClient, 'getAllBooks')
+      .stub(context.services.openLibraryClient, 'getBooksFilteredByTitleSearch')
       .throws("SomeError");
 
     server.inject(options, function(response) {
       Code.expect(response.statusCode).to.equal(500);
 
-      context.services.openLibraryClient.getAllBooks.restore();
+      context.services.openLibraryClient.getBooksFilteredByTitleSearch.restore();
       done();
     });
   });
