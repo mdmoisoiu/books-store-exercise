@@ -1,10 +1,11 @@
 'use strict'
 
-const assert = require('assert')
+const assert = require('assert');
 
-const hapi = require('hapi')
-const inert = require('inert')
-const vision = require('vision')
+const hapi = require('hapi');
+const inert = require('inert');
+const vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
 
 const indexRoutes = require('./lib/routes/index.routes')
 const assetRoutes = require('./lib/routes/asset.routes')
@@ -16,7 +17,7 @@ server.connection({
   port: process.env.PORT || 3000
 })
 
-server.register([inert, vision], (err) => {
+server.register([inert, vision,HapiSwagger], (err) => {
   assert(!err, err)
 
   server.route(indexRoutes)
@@ -29,31 +30,31 @@ server.register([inert, vision], (err) => {
   })
 })
 
-server.register({
-  register: require('hapi-methods-injection'),
-  options: {
-    relativeTo: __dirname,
-    methods: [{
-      prefix: 'services',
-      path: './lib/services'
-    }]
-  }
-}, (err) => {
-  if (err) {
-    throw err;
-  }
+server.register(
+  [
+    {
+      register: require('hapi-methods-injection'),
+      options: {
+        relativeTo: __dirname,
+        methods: [{
+          prefix: 'services',
+          path: './lib/services'
+        }]
+      }
+    },
+    {
+      register: require('hapi-handlers'),
+      options: {
+        relativeTo: __dirname,
+        includes: './lib/handlers/*.js'
+      }
+    }
+  ],
+  (err) => {
+    if (err) {
+      throw err;
+    }
 });
 
-server.register({
-  register: require('hapi-handlers'),
-  options: {
-    relativeTo: __dirname,
-    includes: './lib/handlers/*.js'
-  }
-}, (err) => {
-  if (err) {
-    throw err;
-  }
-});
 
 module.exports = server;
